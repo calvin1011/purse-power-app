@@ -42,7 +42,8 @@ function HomeScreen() {
     <MobileShell>
       <div
         onTouchMove={(e) => {
-          if (window.scrollY <= 0) setPull(Math.min(70, e.touches[0].clientY / 6));
+          const y = e.touches[0]?.clientY ?? 0;
+          if (window.scrollY <= 0) setPull(Math.min(70, y / 6));
         }}
         onTouchEnd={() => {
           if (pull > 40) refresh();

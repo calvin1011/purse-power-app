@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as DealsIndexRouteImport } from './routes/deals.index'
 import { Route as DealsDealIdRouteImport } from './routes/deals.$dealId'
@@ -28,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScanRoute = ScanRouteImport.update({
@@ -74,6 +80,7 @@ const ScanResultsRoute = ScanResultsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
   '/scan': typeof ScanRouteWithChildren
   '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
   '/scan': typeof ScanRouteWithChildren
   '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
   '/scan': typeof ScanRouteWithChildren
   '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/home'
+    | '/profile'
     | '/scan'
     | '/deals/$dealId'
     | '/onboarding/account'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/home'
+    | '/profile'
     | '/scan'
     | '/deals/$dealId'
     | '/onboarding/account'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/home'
+    | '/profile'
     | '/scan'
     | '/deals/$dealId'
     | '/onboarding/account'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
+  ProfileRoute: typeof ProfileRoute
   ScanRoute: typeof ScanRouteWithChildren
   DealsDealIdRoute: typeof DealsDealIdRoute
   OnboardingAccountRoute: typeof OnboardingAccountRoute
@@ -173,6 +186,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/scan': {
@@ -247,6 +267,7 @@ const ScanRouteWithChildren = ScanRoute._addFileChildren(ScanRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  ProfileRoute: ProfileRoute,
   ScanRoute: ScanRouteWithChildren,
   DealsDealIdRoute: DealsDealIdRoute,
   OnboardingAccountRoute: OnboardingAccountRoute,
