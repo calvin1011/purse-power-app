@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as ScanRouteImport } from './routes/scan'
 import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
 import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScanRoute = ScanRouteImport.update({
+  id: '/scan',
+  path: '/scan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingAccountRoute = OnboardingAccountRouteImport.update({
@@ -38,12 +44,14 @@ const OnboardingValueRoute = OnboardingValueRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/scan': typeof ScanRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/scan': typeof ScanRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
 }
@@ -51,20 +59,29 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/scan': typeof ScanRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home' | '/onboarding/account' | '/onboarding/value'
+  fullPaths:
+    '/' | '/home' | '/scan' | '/onboarding/account' | '/onboarding/value'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/onboarding/account' | '/onboarding/value'
-  id: '__root__' | '/' | '/home' | '/onboarding/account' | '/onboarding/value'
+  to: '/' | '/home' | '/scan' | '/onboarding/account' | '/onboarding/value'
+  id:
+    | '__root__'
+    | '/'
+    | '/home'
+    | '/scan'
+    | '/onboarding/account'
+    | '/onboarding/value'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
+  ScanRoute: typeof ScanRoute
   OnboardingAccountRoute: typeof OnboardingAccountRoute
   OnboardingValueRoute: typeof OnboardingValueRoute
 }
@@ -83,6 +100,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scan': {
+      id: '/scan'
+      path: '/scan'
+      fullPath: '/scan'
+      preLoaderRoute: typeof ScanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding/account': {
@@ -105,6 +129,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  ScanRoute: ScanRoute,
   OnboardingAccountRoute: OnboardingAccountRoute,
   OnboardingValueRoute: OnboardingValueRoute,
 }
