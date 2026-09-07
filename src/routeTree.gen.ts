@@ -14,6 +14,7 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
 import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
+import { Route as ReceiptsIndexRouteImport } from './routes/receipts.index'
 import { Route as ScanResultsRouteImport } from './routes/scan.results'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const OnboardingValueRoute = OnboardingValueRouteImport.update({
   path: '/onboarding/value',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceiptsIndexRoute = ReceiptsIndexRouteImport.update({
+  id: '/receipts/',
+  path: '/receipts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScanResultsRoute = ScanResultsRouteImport.update({
   id: '/results',
   path: '/results',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/scan/results': typeof ScanResultsRoute
+  '/receipts/': typeof ReceiptsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/scan/results': typeof ScanResultsRoute
+  '/receipts': typeof ReceiptsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/scan/results': typeof ScanResultsRoute
+  '/receipts/': typeof ReceiptsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/onboarding/account'
     | '/onboarding/value'
     | '/scan/results'
+    | '/receipts/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/onboarding/account'
     | '/onboarding/value'
     | '/scan/results'
+    | '/receipts'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/onboarding/account'
     | '/onboarding/value'
     | '/scan/results'
+    | '/receipts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   ScanRoute: typeof ScanRouteWithChildren
   OnboardingAccountRoute: typeof OnboardingAccountRoute
   OnboardingValueRoute: typeof OnboardingValueRoute
+  ReceiptsIndexRoute: typeof ReceiptsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingValueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receipts/': {
+      id: '/receipts/'
+      path: '/receipts'
+      fullPath: '/receipts/'
+      preLoaderRoute: typeof ReceiptsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/scan/results': {
       id: '/scan/results'
       path: '/results'
@@ -170,6 +190,7 @@ const rootRouteChildren: RootRouteChildren = {
   ScanRoute: ScanRouteWithChildren,
   OnboardingAccountRoute: OnboardingAccountRoute,
   OnboardingValueRoute: OnboardingValueRoute,
+  ReceiptsIndexRoute: ReceiptsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
