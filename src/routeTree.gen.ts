@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as DealsIndexRouteImport } from './routes/deals.index'
+import { Route as DealsDealIdRouteImport } from './routes/deals.$dealId'
 import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
 import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
 import { Route as ReceiptsIndexRouteImport } from './routes/receipts.index'
@@ -37,6 +38,11 @@ const ScanRoute = ScanRouteImport.update({
 const DealsIndexRoute = DealsIndexRouteImport.update({
   id: '/deals/',
   path: '/deals/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealsDealIdRoute = DealsDealIdRouteImport.update({
+  id: '/deals/$dealId',
+  path: '/deals/$dealId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingAccountRoute = OnboardingAccountRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/scan': typeof ScanRouteWithChildren
+  '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/scan': typeof ScanRouteWithChildren
+  '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/scan': typeof ScanRouteWithChildren
+  '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/home'
     | '/scan'
+    | '/deals/$dealId'
     | '/onboarding/account'
     | '/onboarding/value'
     | '/receipts/$receiptId'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/home'
     | '/scan'
+    | '/deals/$dealId'
     | '/onboarding/account'
     | '/onboarding/value'
     | '/receipts/$receiptId'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/home'
     | '/scan'
+    | '/deals/$dealId'
     | '/onboarding/account'
     | '/onboarding/value'
     | '/receipts/$receiptId'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
   ScanRoute: typeof ScanRouteWithChildren
+  DealsDealIdRoute: typeof DealsDealIdRoute
   OnboardingAccountRoute: typeof OnboardingAccountRoute
   OnboardingValueRoute: typeof OnboardingValueRoute
   ReceiptsReceiptIdRoute: typeof ReceiptsReceiptIdRoute
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/deals'
       fullPath: '/deals/'
       preLoaderRoute: typeof DealsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals/$dealId': {
+      id: '/deals/$dealId'
+      path: '/deals/$dealId'
+      fullPath: '/deals/$dealId'
+      preLoaderRoute: typeof DealsDealIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding/account': {
@@ -228,6 +248,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
   ScanRoute: ScanRouteWithChildren,
+  DealsDealIdRoute: DealsDealIdRoute,
   OnboardingAccountRoute: OnboardingAccountRoute,
   OnboardingValueRoute: OnboardingValueRoute,
   ReceiptsReceiptIdRoute: ReceiptsReceiptIdRoute,
