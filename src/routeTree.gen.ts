@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
 import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingAccountRoute = OnboardingAccountRouteImport.update({
+  id: '/onboarding/account',
+  path: '/onboarding/account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingValueRoute = OnboardingValueRouteImport.update({
@@ -25,27 +31,31 @@ const OnboardingValueRoute = OnboardingValueRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/onboarding/value'
+  fullPaths: '/' | '/onboarding/account' | '/onboarding/value'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/onboarding/value'
-  id: '__root__' | '/' | '/onboarding/value'
+  to: '/' | '/onboarding/account' | '/onboarding/value'
+  id: '__root__' | '/' | '/onboarding/account' | '/onboarding/value'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OnboardingAccountRoute: typeof OnboardingAccountRoute
   OnboardingValueRoute: typeof OnboardingValueRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/account': {
+      id: '/onboarding/account'
+      path: '/onboarding/account'
+      fullPath: '/onboarding/account'
+      preLoaderRoute: typeof OnboardingAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding/value': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OnboardingAccountRoute: OnboardingAccountRoute,
   OnboardingValueRoute: OnboardingValueRoute,
 }
 export const routeTree = rootRouteImport
