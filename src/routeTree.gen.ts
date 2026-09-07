@@ -14,6 +14,7 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
 import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
+import { Route as ScanResultsRouteImport } from './routes/scan.results'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,35 +41,54 @@ const OnboardingValueRoute = OnboardingValueRouteImport.update({
   path: '/onboarding/value',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScanResultsRoute = ScanResultsRouteImport.update({
+  id: '/results',
+  path: '/results',
+  getParentRoute: () => ScanRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
-  '/scan': typeof ScanRoute
+  '/scan': typeof ScanRouteWithChildren
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
+  '/scan/results': typeof ScanResultsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
-  '/scan': typeof ScanRoute
+  '/scan': typeof ScanRouteWithChildren
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
+  '/scan/results': typeof ScanResultsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
-  '/scan': typeof ScanRoute
+  '/scan': typeof ScanRouteWithChildren
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
+  '/scan/results': typeof ScanResultsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/home' | '/scan' | '/onboarding/account' | '/onboarding/value'
+    | '/'
+    | '/home'
+    | '/scan'
+    | '/onboarding/account'
+    | '/onboarding/value'
+    | '/scan/results'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/scan' | '/onboarding/account' | '/onboarding/value'
+  to:
+    | '/'
+    | '/home'
+    | '/scan'
+    | '/onboarding/account'
+    | '/onboarding/value'
+    | '/scan/results'
   id:
     | '__root__'
     | '/'
@@ -76,12 +96,13 @@ export interface FileRouteTypes {
     | '/scan'
     | '/onboarding/account'
     | '/onboarding/value'
+    | '/scan/results'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
-  ScanRoute: typeof ScanRoute
+  ScanRoute: typeof ScanRouteWithChildren
   OnboardingAccountRoute: typeof OnboardingAccountRoute
   OnboardingValueRoute: typeof OnboardingValueRoute
 }
@@ -123,13 +144,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingValueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scan/results': {
+      id: '/scan/results'
+      path: '/results'
+      fullPath: '/scan/results'
+      preLoaderRoute: typeof ScanResultsRouteImport
+      parentRoute: typeof ScanRoute
+    }
   }
 }
+
+interface ScanRouteChildren {
+  ScanResultsRoute: typeof ScanResultsRoute
+}
+
+const ScanRouteChildren: ScanRouteChildren = {
+  ScanResultsRoute: ScanResultsRoute,
+}
+
+const ScanRouteWithChildren = ScanRoute._addFileChildren(ScanRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
-  ScanRoute: ScanRoute,
+  ScanRoute: ScanRouteWithChildren,
   OnboardingAccountRoute: OnboardingAccountRoute,
   OnboardingValueRoute: OnboardingValueRoute,
 }
