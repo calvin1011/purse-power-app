@@ -10,33 +10,166 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ScanRouteImport } from './routes/scan'
+import { Route as DealsIndexRouteImport } from './routes/deals.index'
+import { Route as DealsDealIdRouteImport } from './routes/deals.$dealId'
+import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
+import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
+import { Route as ReceiptsIndexRouteImport } from './routes/receipts.index'
+import { Route as ReceiptsReceiptIdRouteImport } from './routes/receipts.$receiptId'
+import { Route as ScanResultsRouteImport } from './routes/scan.results'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScanRoute = ScanRouteImport.update({
+  id: '/scan',
+  path: '/scan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealsIndexRoute = DealsIndexRouteImport.update({
+  id: '/deals/',
+  path: '/deals/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealsDealIdRoute = DealsDealIdRouteImport.update({
+  id: '/deals/$dealId',
+  path: '/deals/$dealId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingAccountRoute = OnboardingAccountRouteImport.update({
+  id: '/onboarding/account',
+  path: '/onboarding/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingValueRoute = OnboardingValueRouteImport.update({
+  id: '/onboarding/value',
+  path: '/onboarding/value',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiptsIndexRoute = ReceiptsIndexRouteImport.update({
+  id: '/receipts/',
+  path: '/receipts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiptsReceiptIdRoute = ReceiptsReceiptIdRouteImport.update({
+  id: '/receipts/$receiptId',
+  path: '/receipts/$receiptId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScanResultsRoute = ScanResultsRouteImport.update({
+  id: '/results',
+  path: '/results',
+  getParentRoute: () => ScanRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
+  '/scan': typeof ScanRouteWithChildren
+  '/deals/$dealId': typeof DealsDealIdRoute
+  '/onboarding/account': typeof OnboardingAccountRoute
+  '/onboarding/value': typeof OnboardingValueRoute
+  '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
+  '/scan/results': typeof ScanResultsRoute
+  '/deals/': typeof DealsIndexRoute
+  '/receipts/': typeof ReceiptsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
+  '/scan': typeof ScanRouteWithChildren
+  '/deals/$dealId': typeof DealsDealIdRoute
+  '/onboarding/account': typeof OnboardingAccountRoute
+  '/onboarding/value': typeof OnboardingValueRoute
+  '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
+  '/scan/results': typeof ScanResultsRoute
+  '/deals': typeof DealsIndexRoute
+  '/receipts': typeof ReceiptsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/home': typeof HomeRoute
+  '/profile': typeof ProfileRoute
+  '/scan': typeof ScanRouteWithChildren
+  '/deals/$dealId': typeof DealsDealIdRoute
+  '/onboarding/account': typeof OnboardingAccountRoute
+  '/onboarding/value': typeof OnboardingValueRoute
+  '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
+  '/scan/results': typeof ScanResultsRoute
+  '/deals/': typeof DealsIndexRoute
+  '/receipts/': typeof ReceiptsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/home'
+    | '/profile'
+    | '/scan'
+    | '/deals/$dealId'
+    | '/onboarding/account'
+    | '/onboarding/value'
+    | '/receipts/$receiptId'
+    | '/scan/results'
+    | '/deals/'
+    | '/receipts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/home'
+    | '/profile'
+    | '/scan'
+    | '/deals/$dealId'
+    | '/onboarding/account'
+    | '/onboarding/value'
+    | '/receipts/$receiptId'
+    | '/scan/results'
+    | '/deals'
+    | '/receipts'
+  id:
+    | '__root__'
+    | '/'
+    | '/home'
+    | '/profile'
+    | '/scan'
+    | '/deals/$dealId'
+    | '/onboarding/account'
+    | '/onboarding/value'
+    | '/receipts/$receiptId'
+    | '/scan/results'
+    | '/deals/'
+    | '/receipts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HomeRoute: typeof HomeRoute
+  ProfileRoute: typeof ProfileRoute
+  ScanRoute: typeof ScanRouteWithChildren
+  DealsDealIdRoute: typeof DealsDealIdRoute
+  OnboardingAccountRoute: typeof OnboardingAccountRoute
+  OnboardingValueRoute: typeof OnboardingValueRoute
+  ReceiptsReceiptIdRoute: typeof ReceiptsReceiptIdRoute
+  DealsIndexRoute: typeof DealsIndexRoute
+  ReceiptsIndexRoute: typeof ReceiptsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +181,100 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scan': {
+      id: '/scan'
+      path: '/scan'
+      fullPath: '/scan'
+      preLoaderRoute: typeof ScanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals/': {
+      id: '/deals/'
+      path: '/deals'
+      fullPath: '/deals/'
+      preLoaderRoute: typeof DealsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals/$dealId': {
+      id: '/deals/$dealId'
+      path: '/deals/$dealId'
+      fullPath: '/deals/$dealId'
+      preLoaderRoute: typeof DealsDealIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/account': {
+      id: '/onboarding/account'
+      path: '/onboarding/account'
+      fullPath: '/onboarding/account'
+      preLoaderRoute: typeof OnboardingAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/value': {
+      id: '/onboarding/value'
+      path: '/onboarding/value'
+      fullPath: '/onboarding/value'
+      preLoaderRoute: typeof OnboardingValueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receipts/': {
+      id: '/receipts/'
+      path: '/receipts'
+      fullPath: '/receipts/'
+      preLoaderRoute: typeof ReceiptsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receipts/$receiptId': {
+      id: '/receipts/$receiptId'
+      path: '/receipts/$receiptId'
+      fullPath: '/receipts/$receiptId'
+      preLoaderRoute: typeof ReceiptsReceiptIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scan/results': {
+      id: '/scan/results'
+      path: '/results'
+      fullPath: '/scan/results'
+      preLoaderRoute: typeof ScanResultsRouteImport
+      parentRoute: typeof ScanRoute
+    }
   }
 }
 
+interface ScanRouteChildren {
+  ScanResultsRoute: typeof ScanResultsRoute
+}
+
+const ScanRouteChildren: ScanRouteChildren = {
+  ScanResultsRoute: ScanResultsRoute,
+}
+
+const ScanRouteWithChildren = ScanRoute._addFileChildren(ScanRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HomeRoute: HomeRoute,
+  ProfileRoute: ProfileRoute,
+  ScanRoute: ScanRouteWithChildren,
+  DealsDealIdRoute: DealsDealIdRoute,
+  OnboardingAccountRoute: OnboardingAccountRoute,
+  OnboardingValueRoute: OnboardingValueRoute,
+  ReceiptsReceiptIdRoute: ReceiptsReceiptIdRoute,
+  DealsIndexRoute: DealsIndexRoute,
+  ReceiptsIndexRoute: ReceiptsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
