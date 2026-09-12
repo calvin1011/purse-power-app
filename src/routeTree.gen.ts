@@ -14,6 +14,7 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ReferralsRouteImport } from './routes/referrals'
+import { Route as RegularsRouteImport } from './routes/regulars'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StreakRouteImport } from './routes/streak'
@@ -49,6 +50,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const ReferralsRoute = ReferralsRouteImport.update({
   id: '/referrals',
   path: '/referrals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegularsRoute = RegularsRouteImport.update({
+  id: '/regulars',
+  path: '/regulars',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScanRoute = ScanRouteImport.update({
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/referrals': typeof ReferralsRoute
+  '/regulars': typeof RegularsRoute
   '/scan': typeof ScanRouteWithChildren
   '/search': typeof SearchRoute
   '/streak': typeof StreakRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/referrals': typeof ReferralsRoute
+  '/regulars': typeof RegularsRoute
   '/scan': typeof ScanRouteWithChildren
   '/search': typeof SearchRoute
   '/streak': typeof StreakRoute
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/referrals': typeof ReferralsRoute
+  '/regulars': typeof RegularsRoute
   '/scan': typeof ScanRouteWithChildren
   '/search': typeof SearchRoute
   '/streak': typeof StreakRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/referrals'
+    | '/regulars'
     | '/scan'
     | '/search'
     | '/streak'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/referrals'
+    | '/regulars'
     | '/scan'
     | '/search'
     | '/streak'
@@ -206,6 +217,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/referrals'
+    | '/regulars'
     | '/scan'
     | '/search'
     | '/streak'
@@ -225,6 +237,7 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
   ReferralsRoute: typeof ReferralsRoute
+  RegularsRoute: typeof RegularsRoute
   ScanRoute: typeof ScanRouteWithChildren
   SearchRoute: typeof SearchRoute
   StreakRoute: typeof StreakRoute
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       path: '/referrals'
       fullPath: '/referrals'
       preLoaderRoute: typeof ReferralsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regulars': {
+      id: '/regulars'
+      path: '/regulars'
+      fullPath: '/regulars'
+      preLoaderRoute: typeof RegularsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/scan': {
@@ -370,6 +390,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
   ReferralsRoute: ReferralsRoute,
+  RegularsRoute: RegularsRoute,
   ScanRoute: ScanRouteWithChildren,
   SearchRoute: SearchRoute,
   StreakRoute: StreakRoute,

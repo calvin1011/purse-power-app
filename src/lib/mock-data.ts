@@ -91,6 +91,7 @@ export const brandColors: Record<string, string> = {
   "Sweetgreen": "oklch(0.68 0.16 140)",
   Walgreens: "oklch(0.6 0.18 250)",
   "Velvet Taco": "oklch(0.6 0.19 350)",
+  "H-E-B": "oklch(0.59 0.2 28)",
 };
 
 export function initials(name: string) {

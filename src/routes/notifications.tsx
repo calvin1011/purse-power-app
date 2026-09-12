@@ -24,7 +24,7 @@ export const Route = createFileRoute("/notifications")({
       { title: "Notifications · Sift" },
       {
         name: "description",
-        content: "Deals near you, streak reminders, expiring offers and weekly savings reports.",
+        content: "Deal alerts, restock reminders, smart swaps and savings updates based on your purchases.",
       },
       { property: "og:title", content: "Notifications · Sift" },
       {

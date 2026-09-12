@@ -139,6 +139,7 @@ function SearchScreen() {
                       <p className="text-xs text-muted-foreground">
                         {d.merchant} · {d.distance}
                       </p>
+                      <p className="mt-1 text-[11px] font-semibold text-primary">{d.relevanceTag}</p>
                     </div>
                   </Link>
                 ))}

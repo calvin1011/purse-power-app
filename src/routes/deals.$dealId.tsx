@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { ArrowLeft, Bookmark, Check, Clock, MapPin, Navigation, Share2 } from "lucide-react";
+import { ArrowLeft, Bookmark, Check, Clock, Info, MapPin, Navigation, Share2 } from "lucide-react";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
 import { deals } from "@/lib/mock-data";
@@ -77,6 +77,13 @@ function DealDetail() {
       <section className="px-5 pt-8">
         <h2 className="text-2xl font-bold leading-snug">{deal.title}</h2>
         <p className="mt-3 text-muted-foreground">{deal.description}</p>
+        <div className="mt-4 flex items-start gap-2 rounded-2xl bg-primary/10 p-3 text-sm">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+          <div>
+            <p className="font-semibold text-primary">Why this deal?</p>
+            <p className="mt-1 text-muted-foreground">{deal.reason}</p>
+          </div>
+        </div>
         <div className="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
           <Clock className="h-4 w-4" /> {deal.expires}
         </div>
@@ -112,7 +119,7 @@ function DealDetail() {
       </section>
 
       <section className="mt-10 px-5">
-        <h3 className="text-lg font-semibold">Similar deals nearby</h3>
+        <h3 className="text-lg font-semibold">More picked for you</h3>
         <div className="mt-4 space-y-3">
           {similar.map((d) => (
             <Link
@@ -127,6 +134,7 @@ function DealDetail() {
                 <div className="text-xs text-muted-foreground">
                   {d.merchant} · {d.distance}
                 </div>
+                <div className="mt-1 text-[11px] font-semibold text-primary">{d.relevanceTag}</div>
               </div>
             </Link>
           ))}
