@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   Award,
   Bell,
+  ChevronRight,
   Copy,
   Flame,
   Lock,
@@ -13,7 +14,7 @@ import {
 } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { useApp } from "@/lib/app-state";
-import { achievements, money } from "@/lib/mock-data";
+import { REFERRAL_CODE, STREAK_DAYS, achievements, money } from "@/lib/mock-data";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -81,6 +82,22 @@ function Profile() {
         </p>
       </section>
 
+      <Link
+        to="/streak"
+        className="surface-card mx-5 mt-4 flex items-center gap-4 rounded-3xl p-5 transition-transform active:scale-[0.99]"
+      >
+        <span className="money-fill flame-pulse flex h-12 w-12 items-center justify-center rounded-2xl">
+          <Flame className="h-6 w-6" />
+        </span>
+        <div className="flex-1">
+          <p className="font-semibold">Savings streak</p>
+          <p className="text-sm text-muted-foreground">
+            {STREAK_DAYS} days · see your calendar and badges
+          </p>
+        </div>
+        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+      </Link>
+
       <section className="mt-8 px-5">
         <div className="flex items-center gap-2">
           <Target className="h-5 w-5 text-primary" />
@@ -118,13 +135,17 @@ function Profile() {
           <Flame className="h-5 w-5 text-primary" />
           <h2 className="text-lg font-semibold">Streak & milestones</h2>
         </div>
-        <div className="surface-card mt-4 flex items-center gap-4 rounded-3xl p-5">
-          <span className="money-text text-4xl font-bold">12</span>
-          <div>
+        <Link
+          to="/streak"
+          className="surface-card mt-4 flex items-center gap-4 rounded-3xl p-5 transition-transform active:scale-[0.99]"
+        >
+          <span className="money-text text-4xl font-bold">{STREAK_DAYS}</span>
+          <div className="flex-1">
             <p className="font-semibold">day scanning streak</p>
             <p className="text-sm text-muted-foreground">Scan today to keep it alive</p>
           </div>
-        </div>
+          <ChevronRight className="h-5 w-5 text-muted-foreground" />
+        </Link>
         <div className="mt-3 space-y-2">
           {achievements.map((a) => (
             <div
@@ -156,17 +177,24 @@ function Profile() {
           <Users className="h-5 w-5 text-primary" />
           <h2 className="text-lg font-semibold">Share with friends</h2>
         </div>
-        <div className="surface-card mt-4 rounded-3xl p-5">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-4 rounded-3xl border border-primary/40 bg-primary/10 p-5">
+          <p className="money-text text-2xl font-bold">Give $5, Get $5</p>
+          <p className="mt-1 text-sm text-muted-foreground">
             Friends get $5 after their first scan. So do you.
           </p>
           <button
             onClick={() => toast.success("Referral code copied")}
             className="mt-4 flex w-full items-center justify-between rounded-2xl border border-dashed border-primary/50 bg-primary/10 px-4 py-3"
           >
-            <span className="font-mono text-base font-semibold text-primary">CALVIN-SIFT</span>
+            <span className="font-mono text-base font-semibold text-primary">{REFERRAL_CODE}</span>
             <Copy className="h-4 w-4 text-primary" />
           </button>
+          <Link
+            to="/referrals"
+            className="mt-3 flex w-full items-center justify-center gap-1 rounded-2xl bg-primary/15 py-3 text-sm font-semibold text-primary"
+          >
+            Invite friends & track rewards <ChevronRight className="h-4 w-4" />
+          </Link>
           <p className="mt-3 text-xs text-muted-foreground">3 friends joined so far</p>
         </div>
       </section>
