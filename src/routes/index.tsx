@@ -24,7 +24,7 @@ function Welcome() {
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-between px-6 pb-10 pt-16 screen-in">
       <div className="flex items-center gap-2 text-sm font-semibold tracking-widest text-muted-foreground">
-        <Sparkles className="h-4 w-4 text-primary" />
+        <Receipt className="h-4 w-4 text-primary" />
         SIFT
       </div>
 

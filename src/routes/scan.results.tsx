@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Bookmark, Camera, Check, MapPin, Share2, Sparkles, Tag } from "lucide-react";
+import { ArrowLeft, Bookmark, Camera, Check, MapPin, PiggyBank, Share2, Tag } from "lucide-react";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
 import { money, scannedReceipt } from "@/lib/mock-data";
