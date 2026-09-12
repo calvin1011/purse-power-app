@@ -29,17 +29,53 @@ export type Receipt = {
 export type Deal = {
   id: string;
   merchant: string;
-  category: Category;
+  category: "Groceries" | "Dining" | "Household" | "Personal Care";
   title: string;
   description: string;
   distance: string;
   expires: string;
   conditions: string;
   redeem: string;
-  trending?: boolean;
-  personalized?: boolean;
-  saves: number;
+  kind: "regular" | "swap" | "upcoming";
+  reason: string;
+  relevanceTag: string;
+  currentItem?: string;
+  currentPrice?: number;
+  suggestedItem?: string;
+  suggestedPrice?: number;
+  weeklySavings?: number;
+  timing?: string;
+  mapPosition: { top: string; left: string };
 };
+
+export type RegularCategory = "Grocery" | "Household" | "Dining" | "Personal Care";
+
+export type RegularItem = {
+  id: string;
+  category: RegularCategory;
+  name: string;
+  brand?: string;
+  averagePrice: number;
+  frequency: string;
+};
+
+export const regularItems: RegularItem[] = [
+  { id: "reg-1", category: "Grocery", name: "Oat Milk", brand: "Kroger", averagePrice: 4.29, frequency: "Every ~10 days" },
+  { id: "reg-2", category: "Grocery", name: "Coffee Beans 12oz", brand: "Private Selection", averagePrice: 13.49, frequency: "Every ~3 weeks" },
+  { id: "reg-3", category: "Grocery", name: "Greek Yogurt 4pk", brand: "Chobani", averagePrice: 5.79, frequency: "Every ~2 weeks" },
+  { id: "reg-4", category: "Household", name: "Tide Pods 42ct", brand: "Tide", averagePrice: 18.99, frequency: "Every ~3 weeks" },
+  { id: "reg-5", category: "Household", name: "Paper Towels 6pk", brand: "Bounty", averagePrice: 12.49, frequency: "Every ~2 weeks" },
+  { id: "reg-6", category: "Dining", name: "Chicken Burrito Bowl", brand: "Chipotle", averagePrice: 11.25, frequency: "Every Friday" },
+  { id: "reg-7", category: "Dining", name: "Grande Cold Brew", brand: "Starbucks", averagePrice: 5.49, frequency: "Twice a week" },
+  { id: "reg-8", category: "Personal Care", name: "Allergy Tablets 30ct", brand: "CVS", averagePrice: 16.99, frequency: "Every ~4 weeks" },
+];
+
+export const suggestedRegulars: RegularItem[] = [
+  { id: "suggested-1", category: "Grocery", name: "Baby Spinach 5oz", brand: "Whole Foods", averagePrice: 4.49, frequency: "Bought twice recently" },
+  { id: "suggested-2", category: "Personal Care", name: "Sunscreen SPF 50", brand: "Neutrogena", averagePrice: 11.29, frequency: "Bought twice this summer" },
+];
+
+export const REGULAR_ITEMS_TRACKED = 24;
 
 export const brandColors: Record<string, string> = {
   Target: "oklch(0.62 0.22 25)",
@@ -55,6 +91,7 @@ export const brandColors: Record<string, string> = {
   "Sweetgreen": "oklch(0.68 0.16 140)",
   Walgreens: "oklch(0.6 0.18 250)",
   "Velvet Taco": "oklch(0.6 0.19 350)",
+  "H-E-B": "oklch(0.59 0.2 28)",
 };
 
 export function initials(name: string) {
@@ -241,104 +278,133 @@ export const deals: Deal[] = [
     id: "d1",
     merchant: "Chipotle",
     category: "Dining",
-    title: "Buy one get one free entrée",
-    description: "Every Friday, buy any entrée and get a second one free.",
-    distance: "0.3 mi",
+    title: "Chipotle Bowl · BOGO this Friday",
+    description: "Buy your usual bowl and get a second entrée free this Friday.",
+    distance: "0.8 mi",
     expires: "Ends in 2 days",
     conditions: "Dine-in or pickup only. One per customer per visit.",
     redeem: "Show this screen at the register before you pay.",
-    trending: true,
-    personalized: true,
-    saves: 1420,
+    kind: "regular",
+    reason: "You bought a Chipotle bowl 3 times in the last month",
+    relevanceTag: "You buy this often",
+    mapPosition: { top: "25%", left: "72%" },
   },
   {
     id: "d2",
     merchant: "Target",
-    category: "Retail",
-    title: "$5 off orders over $50",
-    description: "Circle offer applied automatically to household essentials.",
-    distance: "0.8 mi",
+    category: "Household",
+    title: "Tide Pods 42ct · $3 off",
+    description: "The exact detergent size you regularly buy is marked down.",
+    distance: "1.2 mi",
     expires: "Ends Sunday",
-    conditions: "Excludes gift cards, alcohol and clearance items.",
+    conditions: "Valid on Tide Pods 42ct. Limit one offer per household.",
     redeem: "Scan the barcode in the Circle section at checkout.",
-    trending: true,
-    saves: 980,
+    kind: "regular",
+    reason: "You bought this item 3 times in the last 2 months",
+    relevanceTag: "New deal on a regular",
+    mapPosition: { top: "54%", left: "61%" },
   },
   {
     id: "d3",
-    merchant: "Starbucks",
+    merchant: "H-E-B",
     category: "Dining",
-    title: "$2 off orders over $15",
-    description: "Afternoon pick-me-up on the house, sort of.",
-    distance: "0.2 mi",
-    expires: "Ends in 5 hours",
-    conditions: "Valid 2pm–6pm daily.",
-    redeem: "Ask the barista to apply the in-store promo code SAVE2.",
-    personalized: true,
-    saves: 640,
+    title: "Swap your Starbucks Cold Brew",
+    description: "You buy Starbucks Cold Brew for $5.49. Try H-E-B Cold Brew for $3.29 and save $2.20 each week.",
+    distance: "0.6 mi",
+    expires: "Current price",
+    conditions: "Price shown for a single ready-to-drink cold brew.",
+    redeem: "Find it in the refrigerated coffee aisle.",
+    kind: "swap",
+    reason: "Similar to the cold brew you buy twice a week",
+    relevanceTag: "Based on your purchases",
+    currentItem: "Starbucks Cold Brew",
+    currentPrice: 5.49,
+    suggestedItem: "H-E-B Cold Brew",
+    suggestedPrice: 3.29,
+    weeklySavings: 2.2,
+    mapPosition: { top: "62%", left: "28%" },
   },
   {
     id: "d4",
     merchant: "Kroger",
-    category: "Grocery",
-    title: "15% off your next visit",
-    description: "Loyalty members get 15% off a full grocery run.",
-    distance: "1.2 mi",
+    category: "Groceries",
+    title: "Kroger Oat Milk · $1 off",
+    description: "Your regular oat milk is on sale close to home.",
+    distance: "0.3 mi",
     expires: "Ends in 6 days",
-    conditions: "Requires a Kroger Plus card. Max discount $30.",
+    conditions: "Requires a Kroger Plus card. Limit two.",
     redeem: "Enter your phone number at the pin pad.",
-    trending: true,
-    saves: 1210,
+    kind: "regular",
+    reason: "You bought oat milk 4 times in the last month",
+    relevanceTag: "You buy this often",
+    mapPosition: { top: "24%", left: "20%" },
   },
   {
     id: "d5",
-    merchant: "Meso Maya",
-    category: "Dining",
-    title: "Free guacamole with any entrée",
-    description: "House-made guac, no upcharge, all week.",
-    distance: "1.6 mi",
-    expires: "Ends in 3 days",
-    conditions: "One per table. Dine-in only.",
-    redeem: "Mention the offer to your server when ordering.",
-    personalized: true,
-    saves: 310,
+    merchant: "Walmart",
+    category: "Household",
+    title: "Tide is $4 off this week",
+    description: "You usually buy laundry detergent around this time.",
+    distance: "0.9 mi",
+    expires: "Ends Saturday",
+    conditions: "Valid on participating Tide detergent sizes.",
+    redeem: "Discount applies at checkout.",
+    kind: "upcoming",
+    reason: "Your receipts show a detergent purchase every 3 weeks",
+    relevanceTag: "Restock timing",
+    timing: "Based on your 3-week cycle",
+    mapPosition: { top: "70%", left: "45%" },
   },
   {
     id: "d6",
-    merchant: "CVS",
-    category: "Services",
-    title: "$10 ExtraBucks on $40 spend",
-    description: "Rewards back on health and wellness purchases.",
+    merchant: "Walgreens",
+    category: "Personal Care",
+    title: "Swap your CVS Allergy Tablets",
+    description: "The same 30-count relief is $1.50 less at Walgreens.",
     distance: "0.4 mi",
     expires: "Ends Saturday",
-    conditions: "Health and beauty categories only.",
-    redeem: "Scan your ExtraCare card before payment.",
-    saves: 405,
+    conditions: "Compare active ingredients before switching products.",
+    redeem: "Find it in the allergy care aisle.",
+    kind: "swap",
+    reason: "Similar to allergy tablets you purchase every month",
+    relevanceTag: "Smart swap found",
+    currentItem: "CVS Allergy Tablets 30ct",
+    currentPrice: 16.99,
+    suggestedItem: "Walgreens Allergy Relief 30ct",
+    suggestedPrice: 15.49,
+    weeklySavings: 1.5,
+    mapPosition: { top: "43%", left: "35%" },
   },
   {
     id: "d7",
-    merchant: "Velvet Taco",
-    category: "Dining",
-    title: "$3 tacos after 9pm",
-    description: "Late-night menu pricing on all signature tacos.",
-    distance: "2.1 mi",
-    expires: "Ends in 9 days",
-    conditions: "In-store only, 9pm to close.",
-    redeem: "No code needed · pricing applies automatically.",
-    saves: 220,
-  },
-  {
-    id: "d8",
     merchant: "Trader Joe's",
-    category: "Grocery",
-    title: "Coffee beans $8.99 this week",
-    description: "Medium roast 12oz bags marked down store-wide.",
+    category: "Groceries",
+    title: "Coffee Beans 12oz · $8.99",
+    description: "Your usual medium roast is due for a restock soon.",
     distance: "1.1 mi",
     expires: "Ends Monday",
     conditions: "While supplies last.",
     redeem: "In-store pricing, nothing to activate.",
-    personalized: true,
-    saves: 512,
+    kind: "upcoming",
+    reason: "You usually replace coffee beans every 3 weeks",
+    relevanceTag: "Likely needed soon",
+    timing: "Based on your 3-week cycle",
+    mapPosition: { top: "32%", left: "83%" },
+  },
+  {
+    id: "d8",
+    merchant: "Kroger",
+    category: "Groceries",
+    title: "Blueberries · $3.99 per pint",
+    description: "You paid $6.19 per pint at Whole Foods today.",
+    distance: "1.2 mi",
+    expires: "Ends Sunday",
+    conditions: "Fresh blueberries, one-pint package. While supplies last.",
+    redeem: "In-store pricing, nothing to activate.",
+    kind: "regular",
+    reason: "Matches blueberries on your latest receipt",
+    relevanceTag: "Found from your latest scan",
+    mapPosition: { top: "78%", left: "74%" },
   },
 ];
 
@@ -397,7 +463,7 @@ export const scannedReceipt: Receipt = {
 
 export const STREAK_DAYS = 12;
 
-export type NotifKind = "deal" | "streak" | "expiring" | "referral" | "report";
+export type NotifKind = "deal" | "restock" | "swap" | "streak" | "expiring" | "referral" | "report";
 
 export type Notification = {
   id: string;
@@ -413,11 +479,11 @@ export const notifications: Notification[] = [
   {
     id: "n-1",
     kind: "deal",
-    title: "New deal near you",
-    detail: "Starbucks · 0.2 mi · $2 off orders over $15",
+    title: "Deal alert on a regular item",
+    detail: "Tide Pods are on sale at Target near you. You usually pay $18.99, now $15.99",
     time: "12m ago",
     group: "Today",
-    dealId: "d3",
+    dealId: "d2",
   },
   {
     id: "n-2",
@@ -429,12 +495,12 @@ export const notifications: Notification[] = [
   },
   {
     id: "n-3",
-    kind: "expiring",
-    title: "A deal you saved expires tomorrow",
-    detail: "Chipotle · Buy one get one free entrée",
+    kind: "restock",
+    title: "Restock reminder",
+    detail: "It's been about 2 weeks since you bought oat milk. Kroger has it for $3.29 right now",
     time: "9h ago",
     group: "Today",
-    dealId: "d1",
+    dealId: "d4",
   },
   {
     id: "n-4",
@@ -454,12 +520,12 @@ export const notifications: Notification[] = [
   },
   {
     id: "n-6",
-    kind: "deal",
-    title: "New deal near you",
-    detail: "Trader Joe's · 1.1 mi · Coffee beans $8.99",
+    kind: "swap",
+    title: "Smart swap found",
+    detail: "We found a cheaper alternative to Starbucks Cold Brew you buy regularly",
     time: "Aug 30",
     group: "Earlier",
-    dealId: "d8",
+    dealId: "d3",
   },
   {
     id: "n-7",

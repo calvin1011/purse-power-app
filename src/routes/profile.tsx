@@ -9,6 +9,7 @@ import {
   Lock,
   MapPin,
   Moon,
+  Repeat2,
   Target,
   Users,
 } from "lucide-react";
@@ -80,6 +81,20 @@ function Profile() {
           Member since June 2026
         </p>
       </section>
+
+      <Link
+        to="/regulars"
+        className="surface-card mx-5 mt-4 flex items-center gap-4 rounded-3xl p-5 transition-transform active:scale-[0.99]"
+      >
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/15 text-primary">
+          <Repeat2 className="h-6 w-6" />
+        </span>
+        <div className="flex-1">
+          <p className="font-semibold">Your regulars</p>
+          <p className="text-sm text-muted-foreground">24 items tracked from your receipts</p>
+        </div>
+        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+      </Link>
 
       <Link
         to="/streak"

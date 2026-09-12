@@ -101,7 +101,7 @@ function SearchScreen() {
           </div>
 
           <h2 className="mt-8 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Popular searches
+            Suggested searches
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {popularSearches.map((s) => (
@@ -139,6 +139,7 @@ function SearchScreen() {
                       <p className="text-xs text-muted-foreground">
                         {d.merchant} · {d.distance}
                       </p>
+                      <p className="mt-1 text-[11px] font-semibold text-primary">{d.relevanceTag}</p>
                     </div>
                   </Link>
                 ))}

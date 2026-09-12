@@ -26,7 +26,7 @@ export const Route = createFileRoute("/scan/results")({
 
 function Results() {
   const r = scannedReceipt;
-  const { addReceipt } = useApp();
+  const { addReceipt, addRegular } = useApp();
   const navigate = useNavigate();
   const [saved, setSaved] = useState<string[]>([]);
   const [celebrating, setCelebrating] = useState(false);
@@ -82,6 +82,36 @@ function Results() {
             <span className="money-text ml-auto text-lg font-bold">{money(found)}</span>
           </div>
           <div className="mt-4 space-y-3">
+            <div className="surface-card rounded-3xl p-4">
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                  <Check className="h-4.5 w-4.5" />
+                </div>
+                <div>
+                  <p className="font-semibold">Added to your regulars</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Baby Spinach 5oz</p>
+                  <p className="mt-1 text-xs text-primary">We'll watch for deals on this</p>
+                </div>
+              </div>
+            </div>
+            <Link
+              to="/deals/$dealId"
+              params={{ dealId: "d8" }}
+              className="surface-card block rounded-3xl border border-primary/30 p-4"
+            >
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                  <Tag className="h-4.5 w-4.5" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold leading-snug">Deal alert</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    You just paid $6.19 for blueberries. They're $3.99 at Kroger right now.
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-primary">Save $2.20 per pint</p>
+                </div>
+              </div>
+            </Link>
             {r.savings.map((s) => (
               <div key={s.id} className="surface-card rounded-3xl p-4">
                 <div className="flex items-start gap-3">
@@ -143,6 +173,7 @@ function Results() {
             if (celebrating) return;
             setCelebrating(true);
             addReceipt({ ...r, id: `scan-${Date.now()}` });
+            addRegular("suggested-1");
             setTimeout(() => {
               toast.success("Receipt saved to your vault");
               navigate({ to: "/receipts" });

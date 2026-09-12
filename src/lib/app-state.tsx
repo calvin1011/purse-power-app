@@ -7,6 +7,7 @@ import {
   receipts as seedReceipts,
 } from "./mock-data";
 import type { Receipt } from "./mock-data";
+import type { RegularCategory, RegularItem } from "./mock-data";
 
 type State = {
   name: string | null;
@@ -19,6 +20,11 @@ type State = {
   onboarded: boolean;
   readNotifs: string[];
   locationOn: boolean;
+  pausedRegulars: string[];
+  addedRegulars: string[];
+  manualRegulars: RegularItem[];
+  dismissedSuggestions: string[];
+  regularsIntroSeen: boolean;
 };
 
 type Ctx = State & {
@@ -35,6 +41,11 @@ type Ctx = State & {
   markAllNotifsRead: (ids: string[]) => void;
   markNotifRead: (id: string) => void;
   setLocationOn: (v: boolean) => void;
+  toggleRegular: (id: string) => void;
+  addRegular: (id: string) => void;
+  addManualRegular: (name: string, category: RegularCategory) => void;
+  dismissRegularSuggestion: (id: string) => void;
+  dismissRegularsIntro: () => void;
 };
 
 const AppCtx = createContext<Ctx | null>(null);
@@ -52,6 +63,11 @@ const initial: State = {
   onboarded: false,
   readNotifs: ["n-6", "n-7"],
   locationOn: true,
+  pausedRegulars: [],
+  addedRegulars: [],
+  manualRegulars: [],
+  dismissedSuggestions: [],
+  regularsIntroSeen: false,
 };
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
@@ -115,6 +131,40 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
           readNotifs: s.readNotifs.includes(id) ? s.readNotifs : [...s.readNotifs, id],
         })),
       setLocationOn: (v) => setState((s) => ({ ...s, locationOn: v })),
+      toggleRegular: (id) =>
+        setState((s) => ({
+          ...s,
+          pausedRegulars: s.pausedRegulars.includes(id)
+            ? s.pausedRegulars.filter((itemId) => itemId !== id)
+            : [...s.pausedRegulars, id],
+        })),
+      addRegular: (id) =>
+        setState((s) => ({
+          ...s,
+          addedRegulars: s.addedRegulars.includes(id) ? s.addedRegulars : [...s.addedRegulars, id],
+        })),
+      addManualRegular: (name, category) =>
+        setState((s) => ({
+          ...s,
+          manualRegulars: [
+            ...s.manualRegulars,
+            {
+              id: `manual-${Date.now()}`,
+              category,
+              name,
+              averagePrice: 0,
+              frequency: "Tracking starts now",
+            },
+          ],
+        })),
+      dismissRegularSuggestion: (id) =>
+        setState((s) => ({
+          ...s,
+          dismissedSuggestions: s.dismissedSuggestions.includes(id)
+            ? s.dismissedSuggestions
+            : [...s.dismissedSuggestions, id],
+        })),
+      dismissRegularsIntro: () => setState((s) => ({ ...s, regularsIntroSeen: true })),
     }),
     [state, setAccount],
   );

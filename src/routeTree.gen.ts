@@ -14,6 +14,7 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ReferralsRouteImport } from './routes/referrals'
+import { Route as RegularsRouteImport } from './routes/regulars'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StreakRouteImport } from './routes/streak'
@@ -24,6 +25,7 @@ import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
 import { Route as ReceiptsIndexRouteImport } from './routes/receipts.index'
 import { Route as ReceiptsReceiptIdRouteImport } from './routes/receipts.$receiptId'
 import { Route as ReportsWeeklyRouteImport } from './routes/reports.weekly'
+import { Route as ScanIndexRouteImport } from './routes/scan.index'
 import { Route as ScanResultsRouteImport } from './routes/scan.results'
 
 const IndexRoute = IndexRouteImport.update({
@@ -49,6 +51,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const ReferralsRoute = ReferralsRouteImport.update({
   id: '/referrals',
   path: '/referrals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegularsRoute = RegularsRouteImport.update({
+  id: '/regulars',
+  path: '/regulars',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScanRoute = ScanRouteImport.update({
@@ -101,6 +108,11 @@ const ReportsWeeklyRoute = ReportsWeeklyRouteImport.update({
   path: '/reports/weekly',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScanIndexRoute = ScanIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ScanRoute,
+} as any)
 const ScanResultsRoute = ScanResultsRouteImport.update({
   id: '/results',
   path: '/results',
@@ -113,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/referrals': typeof ReferralsRoute
+  '/regulars': typeof RegularsRoute
   '/scan': typeof ScanRouteWithChildren
   '/search': typeof SearchRoute
   '/streak': typeof StreakRoute
@@ -124,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/scan/results': typeof ScanResultsRoute
   '/deals/': typeof DealsIndexRoute
   '/receipts/': typeof ReceiptsIndexRoute
+  '/scan/': typeof ScanIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,7 +145,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/referrals': typeof ReferralsRoute
-  '/scan': typeof ScanRouteWithChildren
+  '/regulars': typeof RegularsRoute
   '/search': typeof SearchRoute
   '/streak': typeof StreakRoute
   '/deals/$dealId': typeof DealsDealIdRoute
@@ -142,6 +156,7 @@ export interface FileRoutesByTo {
   '/scan/results': typeof ScanResultsRoute
   '/deals': typeof DealsIndexRoute
   '/receipts': typeof ReceiptsIndexRoute
+  '/scan': typeof ScanIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -150,6 +165,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/referrals': typeof ReferralsRoute
+  '/regulars': typeof RegularsRoute
   '/scan': typeof ScanRouteWithChildren
   '/search': typeof SearchRoute
   '/streak': typeof StreakRoute
@@ -161,6 +177,7 @@ export interface FileRoutesById {
   '/scan/results': typeof ScanResultsRoute
   '/deals/': typeof DealsIndexRoute
   '/receipts/': typeof ReceiptsIndexRoute
+  '/scan/': typeof ScanIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -170,6 +187,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/referrals'
+    | '/regulars'
     | '/scan'
     | '/search'
     | '/streak'
@@ -181,6 +199,7 @@ export interface FileRouteTypes {
     | '/scan/results'
     | '/deals/'
     | '/receipts/'
+    | '/scan/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -188,7 +207,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/referrals'
-    | '/scan'
+    | '/regulars'
     | '/search'
     | '/streak'
     | '/deals/$dealId'
@@ -199,6 +218,7 @@ export interface FileRouteTypes {
     | '/scan/results'
     | '/deals'
     | '/receipts'
+    | '/scan'
   id:
     | '__root__'
     | '/'
@@ -206,6 +226,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/referrals'
+    | '/regulars'
     | '/scan'
     | '/search'
     | '/streak'
@@ -217,6 +238,7 @@ export interface FileRouteTypes {
     | '/scan/results'
     | '/deals/'
     | '/receipts/'
+    | '/scan/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -225,6 +247,7 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
   ReferralsRoute: typeof ReferralsRoute
+  RegularsRoute: typeof RegularsRoute
   ScanRoute: typeof ScanRouteWithChildren
   SearchRoute: typeof SearchRoute
   StreakRoute: typeof StreakRoute
@@ -272,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/referrals'
       fullPath: '/referrals'
       preLoaderRoute: typeof ReferralsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regulars': {
+      id: '/regulars'
+      path: '/regulars'
+      fullPath: '/regulars'
+      preLoaderRoute: typeof RegularsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/scan': {
@@ -344,6 +374,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsWeeklyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scan/': {
+      id: '/scan/'
+      path: '/'
+      fullPath: '/scan/'
+      preLoaderRoute: typeof ScanIndexRouteImport
+      parentRoute: typeof ScanRoute
+    }
     '/scan/results': {
       id: '/scan/results'
       path: '/results'
@@ -356,10 +393,12 @@ declare module '@tanstack/react-router' {
 
 interface ScanRouteChildren {
   ScanResultsRoute: typeof ScanResultsRoute
+  ScanIndexRoute: typeof ScanIndexRoute
 }
 
 const ScanRouteChildren: ScanRouteChildren = {
   ScanResultsRoute: ScanResultsRoute,
+  ScanIndexRoute: ScanIndexRoute,
 }
 
 const ScanRouteWithChildren = ScanRoute._addFileChildren(ScanRouteChildren)
@@ -370,6 +409,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
   ReferralsRoute: ReferralsRoute,
+  RegularsRoute: RegularsRoute,
   ScanRoute: ScanRouteWithChildren,
   SearchRoute: SearchRoute,
   StreakRoute: StreakRoute,
