@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Bookmark, Check, Clock, Flame, List, MapPin, Navigation } from "lucide-react";
+import { Bookmark, Check, Clock, Flame, List, MapPin, Navigation, Search } from "lucide-react";
+import { toast } from "sonner";
 import { MobileShell } from "@/components/MobileShell";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
@@ -231,7 +232,7 @@ function DealsFeed({
             ))}
         </div>
       </section>
-    </MobileShell>
+    </>
   );
 }
 
