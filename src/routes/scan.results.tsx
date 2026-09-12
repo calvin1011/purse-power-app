@@ -26,7 +26,7 @@ export const Route = createFileRoute("/scan/results")({
 
 function Results() {
   const r = scannedReceipt;
-  const { addReceipt } = useApp();
+  const { addReceipt, addRegular } = useApp();
   const navigate = useNavigate();
   const [saved, setSaved] = useState<string[]>([]);
   const [celebrating, setCelebrating] = useState(false);
@@ -173,6 +173,7 @@ function Results() {
             if (celebrating) return;
             setCelebrating(true);
             addReceipt({ ...r, id: `scan-${Date.now()}` });
+            addRegular("suggested-1");
             setTimeout(() => {
               toast.success("Receipt saved to your vault");
               navigate({ to: "/receipts" });

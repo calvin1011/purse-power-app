@@ -26,10 +26,12 @@ function RegularsScreen() {
   const {
     pausedRegulars,
     addedRegulars,
+    manualRegulars,
     dismissedSuggestions,
     regularsIntroSeen,
     toggleRegular,
     addRegular,
+    addManualRegular,
     dismissRegularSuggestion,
     dismissRegularsIntro,
   } = useApp();
@@ -73,6 +75,7 @@ function RegularsScreen() {
           const items = [
             ...regularItems.filter((item) => item.category === category),
             ...suggestedRegulars.filter((item) => item.category === category && addedRegulars.includes(item.id)),
+            ...manualRegulars.filter((item) => item.category === category),
           ];
           return (
             <section key={category}>
@@ -87,6 +90,7 @@ function RegularsScreen() {
                     onSubmit={(event) => {
                       event.preventDefault();
                       if (!itemName.trim()) return;
+                      addManualRegular(itemName.trim(), category);
                       toast.success(`${itemName.trim()} added to your regulars`);
                       setItemName("");
                       setAddingTo(null);
@@ -156,7 +160,7 @@ function RegularRow({ item, paused, onToggle }: { item: RegularItem; paused: boo
     <div className="flex items-center gap-3 p-4">
       <div className="min-w-0 flex-1">
         <p className="font-semibold">{item.name}</p>
-        <p className="mt-0.5 text-xs text-muted-foreground">{item.brand ? `${item.brand} · ` : ""}Avg. {money(item.averagePrice)}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">{item.brand ? `${item.brand} · ` : ""}{item.averagePrice > 0 ? `Avg. ${money(item.averagePrice)}` : "Price learned from your next receipt"}</p>
         <p className="mt-1 text-xs text-muted-foreground">{item.frequency}</p>
       </div>
       <Switch checked={!paused} onCheckedChange={onToggle} aria-label={`Track ${item.name}`} />

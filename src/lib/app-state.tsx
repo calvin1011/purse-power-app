@@ -7,6 +7,7 @@ import {
   receipts as seedReceipts,
 } from "./mock-data";
 import type { Receipt } from "./mock-data";
+import type { RegularCategory, RegularItem } from "./mock-data";
 
 type State = {
   name: string | null;
@@ -21,6 +22,7 @@ type State = {
   locationOn: boolean;
   pausedRegulars: string[];
   addedRegulars: string[];
+  manualRegulars: RegularItem[];
   dismissedSuggestions: string[];
   regularsIntroSeen: boolean;
 };
@@ -41,6 +43,7 @@ type Ctx = State & {
   setLocationOn: (v: boolean) => void;
   toggleRegular: (id: string) => void;
   addRegular: (id: string) => void;
+  addManualRegular: (name: string, category: RegularCategory) => void;
   dismissRegularSuggestion: (id: string) => void;
   dismissRegularsIntro: () => void;
 };
@@ -62,6 +65,7 @@ const initial: State = {
   locationOn: true,
   pausedRegulars: [],
   addedRegulars: [],
+  manualRegulars: [],
   dismissedSuggestions: [],
   regularsIntroSeen: false,
 };
@@ -138,6 +142,20 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setState((s) => ({
           ...s,
           addedRegulars: s.addedRegulars.includes(id) ? s.addedRegulars : [...s.addedRegulars, id],
+        })),
+      addManualRegular: (name, category) =>
+        setState((s) => ({
+          ...s,
+          manualRegulars: [
+            ...s.manualRegulars,
+            {
+              id: `manual-${Date.now()}`,
+              category,
+              name,
+              averagePrice: 0,
+              frequency: "Tracking starts now",
+            },
+          ],
         })),
       dismissRegularSuggestion: (id) =>
         setState((s) => ({
