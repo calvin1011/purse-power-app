@@ -21,7 +21,7 @@ export const Route = createFileRoute("/reports/weekly")({
       },
     ],
   }),
-  component: WeeklyReport;
+  component: WeeklyReport,
 });
 
 function WeeklyReport() {
