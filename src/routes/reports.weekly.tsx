@@ -8,13 +8,13 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/reports/weekly")({
   head: () => ({
     meta: [
-      { title: "Weekly savings report — Sift" },
+      { title: "Weekly savings report · Sift" },
       {
         name: "description",
         content:
           "How much you saved this week, daily spending by category, and the deals you narrowly missed.",
       },
-      { property: "og:title", content: "Weekly savings report — Sift" },
+      { property: "og:title", content: "Weekly savings report · Sift" },
       {
         property: "og:description",
         content: "Your week in savings: totals, category breakdown and missed opportunities.",
@@ -148,7 +148,7 @@ function WeeklyReport() {
 
       <div className="px-5 pt-10">
         <button
-          onClick={() => toast.success("Savings card created — ready to share")}
+          onClick={() => toast.success("Savings card created · ready to share")}
           className="flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card py-4 font-semibold transition-transform active:scale-[0.98]"
         >
           <Share2 className="h-5 w-5" /> Share my savings

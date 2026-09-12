@@ -24,12 +24,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/referrals")({
   head: () => ({
     meta: [
-      { title: "Invite friends — Sift" },
+      { title: "Invite friends · Sift" },
       {
         name: "description",
         content: "Give $5, get $5. Share your Sift code and unlock referral milestones.",
       },
-      { property: "og:title", content: "Invite friends — Sift" },
+      { property: "og:title", content: "Invite friends · Sift" },
       {
         property: "og:description",
         content: "Share your code, track friends who joined and unlock premium rewards.",

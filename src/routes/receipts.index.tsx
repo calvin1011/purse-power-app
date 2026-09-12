@@ -11,12 +11,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/receipts/")({
   head: () => ({
     meta: [
-      { title: "Receipt vault — Sift" },
+      { title: "Receipt vault · Sift" },
       {
         name: "description",
         content: "Every receipt you've scanned, searchable by store, date and category.",
       },
-      { property: "og:title", content: "Receipt vault — Sift" },
+      { property: "og:title", content: "Receipt vault · Sift" },
       {
         property: "og:description",
         content: "Search and filter all of your itemized receipts in one place.",

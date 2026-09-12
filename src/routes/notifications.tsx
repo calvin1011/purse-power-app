@@ -19,12 +19,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/notifications")({
   head: () => ({
     meta: [
-      { title: "Notifications — Sift" },
+      { title: "Notifications · Sift" },
       {
         name: "description",
         content: "Deals near you, streak reminders, expiring offers and weekly savings reports.",
       },
-      { property: "og:title", content: "Notifications — Sift" },
+      { property: "og:title", content: "Notifications · Sift" },
       {
         property: "og:description",
         content: "Everything Sift noticed for you, grouped by today, this week and earlier.",

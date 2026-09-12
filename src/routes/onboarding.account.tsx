@@ -9,7 +9,7 @@ export const Route = createFileRoute("/onboarding/account")({
       { title: "Create your Sift account" },
       {
         name: "description",
-        content: "Save your receipts and savings across devices — or skip and start scanning now.",
+        content: "Save your receipts and savings across devices · or skip and start scanning now.",
       },
       { property: "og:title", content: "Create your Sift account" },
       {
@@ -89,7 +89,7 @@ function AccountScreen() {
         onClick={() => finish()}
         className="mt-10 w-full rounded-2xl py-4 text-base font-semibold text-primary"
       >
-        Skip for now — start scanning
+        Skip for now · start scanning
       </button>
     </div>
   );

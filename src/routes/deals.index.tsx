@@ -12,12 +12,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/deals/")({
   head: () => ({
     meta: [
-      { title: "Deals near you — Sift" },
+      { title: "Deals near you · Sift" },
       {
         name: "description",
         content: "Browse trending and personalized deals from stores and restaurants nearby.",
       },
-      { property: "og:title", content: "Deals near you — Sift" },
+      { property: "og:title", content: "Deals near you · Sift" },
       {
         property: "og:description",
         content: "Map and list of nearby offers across food, grocery, retail and services.",
@@ -109,12 +109,12 @@ function DealsScreen() {
           </div>
           <p className="mt-6 text-lg font-semibold">Enable location to see deals near you</p>
           <p className="mt-2 text-sm text-muted-foreground">
-            We only use it to find offers within a few miles — never to track you.
+            We only use it to find offers within a few miles, never to track you.
           </p>
           <button
             onClick={() => {
               setLocationOn(true);
-              toast.success("Location on — found 8 deals nearby");
+              toast.success("Location on · found 8 deals nearby");
             }}
             className="money-fill mt-6 inline-flex items-center justify-center rounded-2xl px-6 py-3.5 font-semibold"
           >
@@ -301,7 +301,7 @@ function DealCard({ deal }: { deal: Deal }) {
       >
         {saved ? (
           <>
-            <Check className="h-4 w-4" /> Saved — Use Deal
+            <Check className="h-4 w-4" /> Saved · Use Deal
           </>
         ) : (
           <>

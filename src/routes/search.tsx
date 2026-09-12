@@ -8,12 +8,12 @@ import { deals, money, popularSearches, recentSearches } from "@/lib/mock-data";
 export const Route = createFileRoute("/search")({
   head: () => ({
     meta: [
-      { title: "Search — Sift" },
+      { title: "Search · Sift" },
       {
         name: "description",
         content: "Search deals, stores and every receipt item you've ever scanned.",
       },
-      { property: "og:title", content: "Search — Sift" },
+      { property: "og:title", content: "Search · Sift" },
       {
         property: "og:description",
         content: "One search across nearby deals, your stores and your receipt vault.",

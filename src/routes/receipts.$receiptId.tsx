@@ -8,12 +8,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/receipts/$receiptId")({
   head: () => ({
     meta: [
-      { title: "Receipt detail — Sift" },
+      { title: "Receipt detail · Sift" },
       {
         name: "description",
         content: "Full itemized receipt with any savings and deals noted inline.",
       },
-      { property: "og:title", content: "Receipt detail — Sift" },
+      { property: "og:title", content: "Receipt detail · Sift" },
       {
         property: "og:description",
         content: "Every line item, plus what you could have saved on this trip.",

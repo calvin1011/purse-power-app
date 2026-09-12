@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Receipt } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sift — Stop leaving money on the table" },
+      { title: "Sift · Stop leaving money on the table" },
       {
         name: "description",
         content:
           "Scan any receipt and instantly see savings you missed, cheaper options nearby, and deals for your next visit.",
       },
-      { property: "og:title", content: "Sift — Stop leaving money on the table" },
+      { property: "og:title", content: "Sift · Stop leaving money on the table" },
       {
         property: "og:description",
         content: "Scan any receipt. Find instant savings across every store and restaurant.",
@@ -24,7 +24,7 @@ function Welcome() {
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-between px-6 pb-10 pt-16 screen-in">
       <div className="flex items-center gap-2 text-sm font-semibold tracking-widest text-muted-foreground">
-        <Sparkles className="h-4 w-4 text-primary" />
+        <Receipt className="h-4 w-4 text-primary" />
         SIFT
       </div>
 

@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/streak")({
   head: () => ({
     meta: [
-      { title: "Your streak & badges — Sift" },
+      { title: "Your streak & badges · Sift" },
       {
         name: "description",
         content: "Your scanning streak calendar, earned badges and the next milestone ahead.",
       },
-      { property: "og:title", content: "Your streak & badges — Sift" },
+      { property: "og:title", content: "Your streak & badges · Sift" },
       {
         property: "og:description",
         content: "Keep the streak alive and unlock badges as you scan and save.",

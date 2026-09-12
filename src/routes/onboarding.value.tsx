@@ -35,7 +35,7 @@ const cards = [
   {
     icon: Receipt,
     title: "All your receipts, one place",
-    body: "Searchable, itemized, and organized — no more crumpled paper.",
+    body: "Searchable, itemized, and organized · no more crumpled paper.",
   },
   {
     icon: Tag,
@@ -91,7 +91,7 @@ function ValueProps() {
 
       <div className="flex-1" />
       <p className="mb-4 text-center text-sm text-muted-foreground">
-        Swipe through, then start scanning — {Card?.title.toLowerCase()}.
+        Swipe through, then start scanning · {Card?.title.toLowerCase()}.
       </p>
       <Link
         to="/onboarding/account"
