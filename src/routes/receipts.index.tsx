@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { ReceiptText, Search } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
@@ -54,10 +54,44 @@ function Vault() {
       .sort((a, b) => +new Date(b.date) - +new Date(a.date));
   }, [receipts, q, cat, range]);
 
+  if (receipts.length === 0) {
+    return (
+      <MobileShell>
+        <header className="px-5 pt-10">
+          <h1 className="text-3xl font-bold">Receipts</h1>
+        </header>
+        <div className="px-5 pt-16 text-center">
+          <div className="surface-card mx-auto flex h-24 w-24 items-center justify-center rounded-4xl">
+            <ReceiptText className="h-10 w-10 text-primary" />
+          </div>
+          <p className="mt-6 text-lg font-semibold">Scan your first receipt to start saving</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            We'll pull out every item and show you exactly where you could have paid less.
+          </p>
+          <Link
+            to="/scan"
+            className="money-fill glow mt-6 inline-flex items-center justify-center rounded-2xl px-6 py-3.5 font-semibold"
+          >
+            Scan Receipt
+          </Link>
+        </div>
+      </MobileShell>
+    );
+  }
+
   return (
     <MobileShell>
       <header className="px-5 pt-10">
-        <h1 className="text-3xl font-bold">Receipts</h1>
+        <div className="flex items-start justify-between gap-3">
+          <h1 className="text-3xl font-bold">Receipts</h1>
+          <Link
+            to="/search"
+            aria-label="Search everything"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground"
+          >
+            <Search className="h-4.5 w-4.5" />
+          </Link>
+        </div>
         <p className="mt-1 text-sm text-muted-foreground">
           {receipts.length} saved · every item searchable
         </p>

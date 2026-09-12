@@ -392,3 +392,188 @@ export const scannedReceipt: Receipt = {
     },
   ],
 };
+
+/* ---------- Added: notifications, streak, badges, referrals, weekly report ---------- */
+
+export const STREAK_DAYS = 12;
+
+export type NotifKind = "deal" | "streak" | "expiring" | "referral" | "report";
+
+export type Notification = {
+  id: string;
+  kind: NotifKind;
+  title: string;
+  detail: string;
+  time: string;
+  group: "Today" | "This Week" | "Earlier";
+  dealId?: string;
+};
+
+export const notifications: Notification[] = [
+  {
+    id: "n-1",
+    kind: "deal",
+    title: "New deal near you",
+    detail: "Starbucks · 0.2 mi — $2 off orders over $15",
+    time: "12m ago",
+    group: "Today",
+    dealId: "d3",
+  },
+  {
+    id: "n-2",
+    kind: "streak",
+    title: `Your savings streak is at ${STREAK_DAYS} days`,
+    detail: "Scan today to keep it alive",
+    time: "3h ago",
+    group: "Today",
+  },
+  {
+    id: "n-3",
+    kind: "expiring",
+    title: "A deal you saved expires tomorrow",
+    detail: "Chipotle · Buy one get one free entrée",
+    time: "9h ago",
+    group: "Today",
+    dealId: "d1",
+  },
+  {
+    id: "n-4",
+    kind: "referral",
+    title: "Maya joined using your referral",
+    detail: "You both earned $5 in savings credit",
+    time: "Tue",
+    group: "This Week",
+  },
+  {
+    id: "n-5",
+    kind: "report",
+    title: "Weekly savings report is ready",
+    detail: "You found $21.31 across 4 receipts",
+    time: "Mon",
+    group: "This Week",
+  },
+  {
+    id: "n-6",
+    kind: "deal",
+    title: "New deal near you",
+    detail: "Trader Joe's · 1.1 mi — Coffee beans $8.99",
+    time: "Aug 30",
+    group: "Earlier",
+    dealId: "d8",
+  },
+  {
+    id: "n-7",
+    kind: "report",
+    title: "Weekly savings report is ready",
+    detail: "You found $16.10 across 3 receipts",
+    time: "Aug 24",
+    group: "Earlier",
+  },
+];
+
+export type Badge = {
+  id: string;
+  label: string;
+  detail: string;
+  done: boolean;
+  progress?: string;
+};
+
+export const badges: Badge[] = [
+  { id: "b1", label: "First Scan", detail: "Unlocked Jun 14", done: true },
+  { id: "b2", label: "7-Day Streak", detail: "Unlocked Aug 8", done: true },
+  { id: "b3", label: "$50 Saved", detail: "Unlocked Aug 12", done: true },
+  { id: "b4", label: "$100 Saved", detail: "Unlocked Sep 3", done: true },
+  { id: "b5", label: "Deal Hunter", detail: "10 deals used", done: false, progress: "9/10 deals used" },
+  {
+    id: "b6",
+    label: "Receipt Hoarder",
+    detail: "50 receipts scanned",
+    done: false,
+    progress: "23/50 receipts",
+  },
+  {
+    id: "b7",
+    label: "Referral King",
+    detail: "5 friends invited",
+    done: false,
+    progress: "3/5 friends invited",
+  },
+];
+
+// Days of the current month the user scanned (for the streak calendar)
+export const scanDays = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+export type Friend = { id: string; name: string; joined: string };
+
+export const friends: Friend[] = [
+  { id: "f1", name: "Maya Patel", joined: "Joined Tuesday" },
+  { id: "f2", name: "Devon Clark", joined: "Joined Aug 28" },
+  { id: "f3", name: "Sofia Ramos", joined: "Joined Aug 19" },
+];
+
+export const referralMilestones = [
+  { id: "m1", label: "Invite 5 friends", reward: "Unlock Premium deals", have: 3, need: 5 },
+  { id: "m2", label: "Invite 10 friends", reward: "Get the exclusive badge", have: 3, need: 10 },
+];
+
+export const REFERRAL_CODE = "CALVIN-SIFT";
+export const REFERRER_PERCENTILE = 15;
+
+export type ReportCategory = "Dining" | "Grocery" | "Retail" | "Other";
+
+export const weeklyReport = {
+  saved: 21.31,
+  lastWeekSaved: 17.11,
+  days: [
+    { day: "Mon", spent: 9.4, category: "Dining" as ReportCategory },
+    { day: "Tue", spent: 112.44, category: "Grocery" as ReportCategory },
+    { day: "Wed", spent: 0, category: "Other" as ReportCategory },
+    { day: "Thu", spent: 23.85, category: "Dining" as ReportCategory },
+    { day: "Fri", spent: 64.18, category: "Retail" as ReportCategory },
+    { day: "Sat", spent: 18.6, category: "Other" as ReportCategory },
+    { day: "Sun", spent: 31.27, category: "Retail" as ReportCategory },
+  ],
+  breakdown: [
+    { category: "Grocery" as ReportCategory, amount: 112.44 },
+    { category: "Retail" as ReportCategory, amount: 95.45 },
+    { category: "Dining" as ReportCategory, amount: 33.25 },
+    { category: "Other" as ReportCategory, amount: 18.6 },
+  ],
+  missed: [
+    {
+      id: "mo1",
+      store: "Target",
+      title: "$5 off $50 Circle offer",
+      detail: "Your Friday Target run qualified but the offer never applied",
+      amount: 5,
+      dealId: "d2",
+    },
+    {
+      id: "mo2",
+      store: "Chipotle",
+      title: "BOGO entrée on Fridays",
+      detail: "Two entrées on Thursday — one day early",
+      amount: 11.25,
+      dealId: "d1",
+    },
+    {
+      id: "mo3",
+      store: "Kroger",
+      title: "15% off a full grocery run",
+      detail: "Loyalty discount was available on Tuesday's $112 trip",
+      amount: 4.5,
+      dealId: "d4",
+    },
+  ],
+};
+
+export const reportCategoryColor: Record<ReportCategory, string> = {
+  Dining: "var(--chart-1)",
+  Grocery: "var(--chart-2)",
+  Retail: "var(--chart-3)",
+  Other: "var(--chart-4)",
+};
+
+export const recentSearches = ["Chipotle", "olive oil", "Target", "coffee"];
+export const popularSearches = ["BOGO", "Starbucks", "grocery deals", "Whole Foods"];

@@ -11,14 +11,19 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ReferralsRouteImport } from './routes/referrals'
 import { Route as ScanRouteImport } from './routes/scan'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as StreakRouteImport } from './routes/streak'
 import { Route as DealsIndexRouteImport } from './routes/deals.index'
 import { Route as DealsDealIdRouteImport } from './routes/deals.$dealId'
 import { Route as OnboardingAccountRouteImport } from './routes/onboarding.account'
 import { Route as OnboardingValueRouteImport } from './routes/onboarding.value'
 import { Route as ReceiptsIndexRouteImport } from './routes/receipts.index'
 import { Route as ReceiptsReceiptIdRouteImport } from './routes/receipts.$receiptId'
+import { Route as ReportsWeeklyRouteImport } from './routes/reports.weekly'
 import { Route as ScanResultsRouteImport } from './routes/scan.results'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,14 +36,34 @@ const HomeRoute = HomeRouteImport.update({
   path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReferralsRoute = ReferralsRouteImport.update({
+  id: '/referrals',
+  path: '/referrals',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScanRoute = ScanRouteImport.update({
   id: '/scan',
   path: '/scan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StreakRoute = StreakRouteImport.update({
+  id: '/streak',
+  path: '/streak',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsIndexRoute = DealsIndexRouteImport.update({
@@ -71,6 +96,11 @@ const ReceiptsReceiptIdRoute = ReceiptsReceiptIdRouteImport.update({
   path: '/receipts/$receiptId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsWeeklyRoute = ReportsWeeklyRouteImport.update({
+  id: '/reports/weekly',
+  path: '/reports/weekly',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScanResultsRoute = ScanResultsRouteImport.update({
   id: '/results',
   path: '/results',
@@ -80,12 +110,17 @@ const ScanResultsRoute = ScanResultsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/referrals': typeof ReferralsRoute
   '/scan': typeof ScanRouteWithChildren
+  '/search': typeof SearchRoute
+  '/streak': typeof StreakRoute
   '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
+  '/reports/weekly': typeof ReportsWeeklyRoute
   '/scan/results': typeof ScanResultsRoute
   '/deals/': typeof DealsIndexRoute
   '/receipts/': typeof ReceiptsIndexRoute
@@ -93,12 +128,17 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/referrals': typeof ReferralsRoute
   '/scan': typeof ScanRouteWithChildren
+  '/search': typeof SearchRoute
+  '/streak': typeof StreakRoute
   '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
+  '/reports/weekly': typeof ReportsWeeklyRoute
   '/scan/results': typeof ScanResultsRoute
   '/deals': typeof DealsIndexRoute
   '/receipts': typeof ReceiptsIndexRoute
@@ -107,12 +147,17 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/referrals': typeof ReferralsRoute
   '/scan': typeof ScanRouteWithChildren
+  '/search': typeof SearchRoute
+  '/streak': typeof StreakRoute
   '/deals/$dealId': typeof DealsDealIdRoute
   '/onboarding/account': typeof OnboardingAccountRoute
   '/onboarding/value': typeof OnboardingValueRoute
   '/receipts/$receiptId': typeof ReceiptsReceiptIdRoute
+  '/reports/weekly': typeof ReportsWeeklyRoute
   '/scan/results': typeof ScanResultsRoute
   '/deals/': typeof DealsIndexRoute
   '/receipts/': typeof ReceiptsIndexRoute
@@ -122,12 +167,17 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/home'
+    | '/notifications'
     | '/profile'
+    | '/referrals'
     | '/scan'
+    | '/search'
+    | '/streak'
     | '/deals/$dealId'
     | '/onboarding/account'
     | '/onboarding/value'
     | '/receipts/$receiptId'
+    | '/reports/weekly'
     | '/scan/results'
     | '/deals/'
     | '/receipts/'
@@ -135,12 +185,17 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/home'
+    | '/notifications'
     | '/profile'
+    | '/referrals'
     | '/scan'
+    | '/search'
+    | '/streak'
     | '/deals/$dealId'
     | '/onboarding/account'
     | '/onboarding/value'
     | '/receipts/$receiptId'
+    | '/reports/weekly'
     | '/scan/results'
     | '/deals'
     | '/receipts'
@@ -148,12 +203,17 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/home'
+    | '/notifications'
     | '/profile'
+    | '/referrals'
     | '/scan'
+    | '/search'
+    | '/streak'
     | '/deals/$dealId'
     | '/onboarding/account'
     | '/onboarding/value'
     | '/receipts/$receiptId'
+    | '/reports/weekly'
     | '/scan/results'
     | '/deals/'
     | '/receipts/'
@@ -162,12 +222,17 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
+  NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
+  ReferralsRoute: typeof ReferralsRoute
   ScanRoute: typeof ScanRouteWithChildren
+  SearchRoute: typeof SearchRoute
+  StreakRoute: typeof StreakRoute
   DealsDealIdRoute: typeof DealsDealIdRoute
   OnboardingAccountRoute: typeof OnboardingAccountRoute
   OnboardingValueRoute: typeof OnboardingValueRoute
   ReceiptsReceiptIdRoute: typeof ReceiptsReceiptIdRoute
+  ReportsWeeklyRoute: typeof ReportsWeeklyRoute
   DealsIndexRoute: typeof DealsIndexRoute
   ReceiptsIndexRoute: typeof ReceiptsIndexRoute
 }
@@ -188,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -195,11 +267,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/referrals': {
+      id: '/referrals'
+      path: '/referrals'
+      fullPath: '/referrals'
+      preLoaderRoute: typeof ReferralsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/scan': {
       id: '/scan'
       path: '/scan'
       fullPath: '/scan'
       preLoaderRoute: typeof ScanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/streak': {
+      id: '/streak'
+      path: '/streak'
+      fullPath: '/streak'
+      preLoaderRoute: typeof StreakRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals/': {
@@ -244,6 +337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReceiptsReceiptIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/weekly': {
+      id: '/reports/weekly'
+      path: '/reports/weekly'
+      fullPath: '/reports/weekly'
+      preLoaderRoute: typeof ReportsWeeklyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/scan/results': {
       id: '/scan/results'
       path: '/results'
@@ -267,12 +367,17 @@ const ScanRouteWithChildren = ScanRoute._addFileChildren(ScanRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
+  ReferralsRoute: ReferralsRoute,
   ScanRoute: ScanRouteWithChildren,
+  SearchRoute: SearchRoute,
+  StreakRoute: StreakRoute,
   DealsDealIdRoute: DealsDealIdRoute,
   OnboardingAccountRoute: OnboardingAccountRoute,
   OnboardingValueRoute: OnboardingValueRoute,
   ReceiptsReceiptIdRoute: ReceiptsReceiptIdRoute,
+  ReportsWeeklyRoute: ReportsWeeklyRoute,
   DealsIndexRoute: DealsIndexRoute,
   ReceiptsIndexRoute: ReceiptsIndexRoute,
 }

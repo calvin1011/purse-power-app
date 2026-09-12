@@ -205,3 +205,37 @@
     letter-spacing: -0.02em;
   }
 }
+
+@utility confetti-piece {
+  animation: confetti-fall 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) scale(0.6) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--dx, 0), 260px, 0) scale(1) rotate(420deg);
+  }
+}
+
+@utility flame-pulse {
+  animation: flame-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes flame-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.08);
+    filter: brightness(1.18);
+  }
+}

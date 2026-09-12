@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Bookmark, Check, Clock, Flame, List, MapPin, Navigation } from "lucide-react";
+import { Bookmark, Check, Clock, Flame, List, MapPin, Navigation, Search } from "lucide-react";
+import { toast } from "sonner";
 import { MobileShell } from "@/components/MobileShell";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
@@ -31,8 +32,11 @@ const cats: (Category | "All")[] = ["All", "Dining", "Grocery", "Retail", "Servi
 function DealsScreen() {
   const [view, setView] = useState<"list" | "map">("list");
   const [cat, setCat] = useState<(typeof cats)[number]>("All");
+  const [tab, setTab] = useState<"feed" | "saved">("feed");
+  const { savedDeals, locationOn, setLocationOn } = useApp();
 
   const filtered = deals.filter((d) => (cat === "All" ? true : d.category === cat));
+  const saved = deals.filter((d) => savedDeals.includes(d.id));
 
   return (
     <MobileShell>
@@ -41,23 +45,130 @@ function DealsScreen() {
           <h1 className="text-3xl font-bold">Explore</h1>
           <p className="mt-1 text-sm text-muted-foreground">Deals within 3 miles of you</p>
         </div>
-        <div className="flex rounded-full border border-border bg-card p-1">
-          {(["map", "list"] as const).map((v) => (
-            <button
-              key={v}
-              onClick={() => setView(v)}
-              aria-label={`${v} view`}
-              className={cn(
-                "flex h-9 w-9 items-center justify-center rounded-full transition-colors",
-                view === v ? "money-fill" : "text-muted-foreground",
-              )}
-            >
-              {v === "map" ? <MapPin className="h-4.5 w-4.5" /> : <List className="h-4.5 w-4.5" />}
-            </button>
-          ))}
+        <div className="flex items-center gap-2">
+          <Link
+            to="/search"
+            aria-label="Search deals"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground"
+          >
+            <Search className="h-4.5 w-4.5" />
+          </Link>
+          <div className="flex rounded-full border border-border bg-card p-1">
+            {(["map", "list"] as const).map((v) => (
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                aria-label={`${v} view`}
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-full transition-colors",
+                  view === v ? "money-fill" : "text-muted-foreground",
+                )}
+              >
+                {v === "map" ? (
+                  <MapPin className="h-4.5 w-4.5" />
+                ) : (
+                  <List className="h-4.5 w-4.5" />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
+      <div className="mt-6 flex gap-2 px-5">
+        {(["feed", "saved"] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={cn(
+              "flex flex-1 items-center justify-center gap-2 rounded-2xl border py-2.5 text-sm font-semibold transition-colors",
+              tab === t
+                ? "border-primary bg-primary/15 text-primary"
+                : "border-border bg-card text-muted-foreground",
+            )}
+          >
+            {t === "feed" ? "All Deals" : "Saved Deals"}
+            {t === "saved" && saved.length > 0 && (
+              <span
+                className={cn(
+                  "rounded-full px-1.5 py-0.5 text-[10px] font-bold",
+                  tab === "saved" ? "money-fill" : "bg-muted text-muted-foreground",
+                )}
+              >
+                {saved.length}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {!locationOn ? (
+        <div className="px-5 pt-16 text-center">
+          <div className="surface-card mx-auto flex h-24 w-24 items-center justify-center rounded-4xl">
+            <MapPin className="h-10 w-10 text-primary" />
+          </div>
+          <p className="mt-6 text-lg font-semibold">Enable location to see deals near you</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            We only use it to find offers within a few miles — never to track you.
+          </p>
+          <button
+            onClick={() => {
+              setLocationOn(true);
+              toast.success("Location on — found 8 deals nearby");
+            }}
+            className="money-fill mt-6 inline-flex items-center justify-center rounded-2xl px-6 py-3.5 font-semibold"
+          >
+            Enable location
+          </button>
+        </div>
+      ) : tab === "saved" ? (
+        <div className="mt-4 space-y-3 px-5">
+          {saved.map((d) => (
+            <DealCard key={`s-${d.id}`} deal={d} />
+          ))}
+          {saved.length === 0 && (
+            <div className="pt-14 text-center">
+              <div className="surface-card mx-auto flex h-24 w-24 items-center justify-center rounded-4xl">
+                <Bookmark className="h-10 w-10 text-primary" />
+              </div>
+              <p className="mt-6 text-lg font-semibold">No saved deals yet</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Tap Save Deal on anything you like and it'll wait for you here.
+              </p>
+              <button
+                onClick={() => setTab("feed")}
+                className="money-fill mt-6 inline-flex items-center justify-center rounded-2xl px-6 py-3.5 font-semibold"
+              >
+                Browse deals
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <DealsFeed
+          view={view}
+          cat={cat}
+          setCat={setCat}
+          filtered={filtered}
+        />
+      )}
+    </MobileShell>
+  );
+}
+
+function DealsFeed({
+  view,
+  cat,
+  setCat,
+  filtered,
+}: {
+  view: "list" | "map";
+  cat: (typeof cats)[number];
+  setCat: (c: (typeof cats)[number]) => void;
+  filtered: Deal[];
+}) {
+  return (
+    <>
       {view === "map" && <MapPanel />}
 
       <section className="pt-8">
@@ -121,7 +232,7 @@ function DealsScreen() {
             ))}
         </div>
       </section>
-    </MobileShell>
+    </>
   );
 }
 

@@ -17,6 +17,8 @@ type State = {
   extraSaved: number;
   goal: number;
   onboarded: boolean;
+  readNotifs: string[];
+  locationOn: boolean;
 };
 
 type Ctx = State & {
@@ -30,6 +32,9 @@ type Ctx = State & {
   addReceipt: (r: Receipt) => void;
   setGoal: (n: number) => void;
   completeOnboarding: () => void;
+  markAllNotifsRead: (ids: string[]) => void;
+  markNotifRead: (id: string) => void;
+  setLocationOn: (v: boolean) => void;
 };
 
 const AppCtx = createContext<Ctx | null>(null);
@@ -45,6 +50,8 @@ const initial: State = {
   extraSaved: 0,
   goal: 60,
   onboarded: false,
+  readNotifs: ["n-6", "n-7"],
+  locationOn: true,
 };
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
@@ -100,6 +107,14 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         }),
       setGoal: (n) => setState((s) => ({ ...s, goal: n })),
       completeOnboarding: () => setState((s) => ({ ...s, onboarded: true })),
+      markAllNotifsRead: (ids) =>
+        setState((s) => ({ ...s, readNotifs: Array.from(new Set([...s.readNotifs, ...ids])) })),
+      markNotifRead: (id) =>
+        setState((s) => ({
+          ...s,
+          readNotifs: s.readNotifs.includes(id) ? s.readNotifs : [...s.readNotifs, id],
+        })),
+      setLocationOn: (v) => setState((s) => ({ ...s, locationOn: v })),
     }),
     [state, setAccount],
   );
