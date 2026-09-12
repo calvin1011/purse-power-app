@@ -38,10 +38,9 @@ export const Route = createFileRoute("/profile")({
 });
 
 function Profile() {
-  const { name, email, totalSaved, receiptCount, dealsUsed, theme, toggleTheme, goal, setGoal } =
+  const { name, email, totalSaved, receiptCount, dealsUsed, theme, toggleTheme, goal, setGoal, locationOn, setLocationOn } =
     useApp();
   const [notif, setNotif] = useState(true);
-  const [loc, setLoc] = useState(true);
   const [privacy, setPrivacy] = useState(false);
 
   const monthSaved = 38.9;
@@ -203,7 +202,7 @@ function Profile() {
         <h2 className="text-lg font-semibold">Settings</h2>
         <div className="surface-card mt-4 divide-y divide-border rounded-3xl">
           <Row icon={Bell} label="Notifications" checked={notif} onChange={setNotif} />
-          <Row icon={MapPin} label="Location access" checked={loc} onChange={setLoc} />
+          <Row icon={MapPin} label="Location access" checked={locationOn} onChange={setLocationOn} />
           <Row
             icon={Moon}
             label="Dark mode"
