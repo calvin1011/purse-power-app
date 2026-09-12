@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Bookmark, Check, MapPin, Share2, Sparkles, Tag } from "lucide-react";
+import { ArrowLeft, Bookmark, Camera, Check, MapPin, Share2, Sparkles, Tag } from "lucide-react";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
 import { money, scannedReceipt } from "@/lib/mock-data";
@@ -29,6 +29,7 @@ function Results() {
   const { addReceipt } = useApp();
   const navigate = useNavigate();
   const [saved, setSaved] = useState<string[]>([]);
+  const [celebrating, setCelebrating] = useState(false);
   const found = r.savings.reduce((a, s) => a + s.amount, 0);
 
   return (
@@ -134,27 +135,59 @@ function Results() {
         </section>
       )}
 
+      {celebrating && <Confetti />}
+
       <div className="fixed inset-x-0 bottom-0 mx-auto max-w-md bg-gradient-to-t from-background via-background to-transparent px-5 pb-6 pt-8">
-        <div className="flex gap-3">
-          <button
-            onClick={() => {
-              addReceipt({ ...r, id: `scan-${Date.now()}` });
+        <button
+          onClick={() => {
+            if (celebrating) return;
+            setCelebrating(true);
+            addReceipt({ ...r, id: `scan-${Date.now()}` });
+            setTimeout(() => {
               toast.success("Receipt saved to your vault");
               navigate({ to: "/receipts" });
-            }}
-            className="money-fill glow flex-1 rounded-2xl py-4 font-semibold transition-transform active:scale-[0.98]"
+            }, 1150);
+          }}
+          className="money-fill glow w-full rounded-2xl py-4 font-semibold transition-transform active:scale-[0.98]"
+        >
+          {celebrating ? `Nice — ${money(found)} found!` : "Save Receipt"}
+        </button>
+        <div className="mt-3 flex gap-3">
+          <Link
+            to="/scan"
+            className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-semibold"
           >
-            Save Receipt
-          </button>
+            <Camera className="h-4.5 w-4.5" /> Scan another
+          </Link>
           <button
             onClick={() => toast("Savings summary copied — share away")}
-            aria-label="Share savings"
-            className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card"
+            className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-semibold"
           >
-            <Share2 className="h-5 w-5" />
+            <Share2 className="h-4.5 w-4.5" /> Share Savings
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Confetti() {
+  const pieces = Array.from({ length: 26 }, (_, i) => i);
+  const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-24 z-50 mx-auto h-0 max-w-md">
+      {pieces.map((i) => (
+        <span
+          key={i}
+          className="confetti-piece absolute block h-2.5 w-2.5 rounded-[3px]"
+          style={{
+            left: `${(i * 3.7) % 96}%`,
+            background: colors[i % colors.length],
+            animationDelay: `${(i % 6) * 60}ms`,
+            ["--dx" as string]: `${((i % 5) - 2) * 26}px`,
+          }}
+        />
+      ))}
     </div>
   );
 }
