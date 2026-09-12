@@ -4,13 +4,13 @@ import { ArrowRight, Receipt } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sift — Stop leaving money on the table" },
+      { title: "Sift · Stop leaving money on the table" },
       {
         name: "description",
         content:
           "Scan any receipt and instantly see savings you missed, cheaper options nearby, and deals for your next visit.",
       },
-      { property: "og:title", content: "Sift — Stop leaving money on the table" },
+      { property: "og:title", content: "Sift · Stop leaving money on the table" },
       {
         property: "og:description",
         content: "Scan any receipt. Find instant savings across every store and restaurant.",
