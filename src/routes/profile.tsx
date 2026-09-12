@@ -22,12 +22,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "Your profile — Sift" },
+      { title: "Your profile · Sift" },
       {
         name: "description",
         content: "Your savings stats, streaks, milestones, referrals and app settings.",
       },
-      { property: "og:title", content: "Your profile — Sift" },
+      { property: "og:title", content: "Your profile · Sift" },
       {
         property: "og:description",
         content: "Track lifetime savings, hit milestones, and invite friends to Sift.",

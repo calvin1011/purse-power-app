@@ -9,12 +9,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/scan/results")({
   head: () => ({
     meta: [
-      { title: "Savings found — Sift" },
+      { title: "Savings found · Sift" },
       {
         name: "description",
         content: "Your receipt breakdown plus every saving, cheaper alternative and missed deal.",
       },
-      { property: "og:title", content: "Savings found — Sift" },
+      { property: "og:title", content: "Savings found · Sift" },
       {
         property: "og:description",
         content: "See exactly what you could have saved on this purchase.",
@@ -77,7 +77,7 @@ function Results() {
       {found > 0 ? (
         <section className="mt-8 px-5">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
+            <PiggyBank className="h-5 w-5 text-primary" />
             <h2 className="text-lg font-semibold">Savings Found</h2>
             <span className="money-text ml-auto text-lg font-bold">{money(found)}</span>
           </div>
@@ -150,7 +150,7 @@ function Results() {
           }}
           className="money-fill glow w-full rounded-2xl py-4 font-semibold transition-transform active:scale-[0.98]"
         >
-          {celebrating ? `Nice — ${money(found)} found!` : "Save Receipt"}
+          {celebrating ? `Nice · ${money(found)} found!` : "Save Receipt"}
         </button>
         <div className="mt-3 flex gap-3">
           <Link
@@ -160,7 +160,7 @@ function Results() {
             <Camera className="h-4.5 w-4.5" /> Scan another
           </Link>
           <button
-            onClick={() => toast("Savings summary copied — share away")}
+            onClick={() => toast("Savings summary copied · share away")}
             className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-semibold"
           >
             <Share2 className="h-4.5 w-4.5" /> Share Savings

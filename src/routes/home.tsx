@@ -9,12 +9,12 @@ import { STREAK_DAYS, deals, money, notifications } from "@/lib/mock-data";
 export const Route = createFileRoute("/home")({
   head: () => ({
     meta: [
-      { title: "Your savings dashboard — Sift" },
+      { title: "Your savings dashboard · Sift" },
       {
         name: "description",
         content: "Track what you've saved, scan a new receipt, and see deals near you right now.",
       },
-      { property: "og:title", content: "Your savings dashboard — Sift" },
+      { property: "og:title", content: "Your savings dashboard · Sift" },
       {
         property: "og:description",
         content: "Total saved, recent scans, nearby deals and your weekly spending snapshot.",

@@ -9,12 +9,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/deals/$dealId")({
   head: () => ({
     meta: [
-      { title: "Deal details — Sift" },
+      { title: "Deal details · Sift" },
       {
         name: "description",
         content: "Deal terms, expiration, how to redeem, and directions to the merchant.",
       },
-      { property: "og:title", content: "Deal details — Sift" },
+      { property: "og:title", content: "Deal details · Sift" },
       {
         property: "og:description",
         content: "Everything you need to redeem this offer on your next visit.",
@@ -143,7 +143,7 @@ function DealDetail() {
         >
           {saved ? (
             <>
-              <Check className="h-5 w-5" /> Saved — Use Deal
+              <Check className="h-5 w-5" /> Saved · Use Deal
             </>
           ) : (
             <>

@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — "smart money" savings app.
+ * Design system · "smart money" savings app.
  * Dark-first, electric mint accent, soft rounded surfaces.
  * All colors are oklch semantic tokens. Never hardcode colors in components.
  */

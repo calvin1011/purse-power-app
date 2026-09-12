@@ -5,12 +5,12 @@ import { Image, X, Zap } from "lucide-react";
 export const Route = createFileRoute("/scan")({
   head: () => ({
     meta: [
-      { title: "Scan a receipt — Sift" },
+      { title: "Scan a receipt · Sift" },
       {
         name: "description",
         content: "Point your camera at any receipt and Sift finds the savings you missed.",
       },
-      { property: "og:title", content: "Scan a receipt — Sift" },
+      { property: "og:title", content: "Scan a receipt · Sift" },
       {
         property: "og:description",
         content: "Capture a receipt from any store or restaurant to uncover instant savings.",

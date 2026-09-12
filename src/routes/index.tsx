@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Receipt } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
