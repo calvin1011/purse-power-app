@@ -7,6 +7,8 @@ import {
   Clock,
   Flame,
   MapPin,
+  RefreshCw,
+  Repeat2,
   Users,
 } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
@@ -38,6 +40,8 @@ const groups = ["Today", "This Week", "Earlier"] as const;
 
 const icons = {
   deal: MapPin,
+  restock: RefreshCw,
+  swap: Repeat2,
   streak: Flame,
   expiring: Clock,
   referral: Users,
@@ -146,7 +150,7 @@ function Row({
 
   const cls = "surface-card flex gap-3 rounded-3xl p-4 transition-transform active:scale-[0.99]";
 
-  if (n.kind === "deal" || n.kind === "expiring") {
+  if (n.kind === "deal" || n.kind === "swap" || n.kind === "expiring") {
     return (
       <Link
         to="/deals/$dealId"
@@ -154,6 +158,13 @@ function Row({
         onClick={onOpen}
         className={cls}
       >
+        {body}
+      </Link>
+    );
+  }
+  if (n.kind === "restock") {
+    return (
+      <Link to="/regulars" onClick={onOpen} className={cls}>
         {body}
       </Link>
     );

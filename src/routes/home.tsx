@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Bell, Camera, ChevronRight, Clock, Flame, MapPin, RefreshCw, Search } from "lucide-react";
+import { Bell, Camera, ChevronRight, Clock, Flame, MapPin, RefreshCw, Repeat2, Search } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { StoreAvatar } from "@/components/StoreAvatar";
 import { useApp } from "@/lib/app-state";
-import { STREAK_DAYS, deals, money, notifications } from "@/lib/mock-data";
+import { REGULAR_ITEMS_TRACKED, STREAK_DAYS, deals, money, notifications } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/home")({
   head: () => ({
@@ -117,7 +117,7 @@ function HomeScreen() {
         </div>
 
         <section className="pt-10">
-          <SectionHeader title="Deals Near You" to="/deals" />
+          <SectionHeader title="Deals For You" to="/deals" />
           <div className="no-scrollbar mt-4 flex snap-x gap-3 overflow-x-auto px-5 pb-1">
             {deals.slice(0, 5).map((d) => (
               <Link
@@ -131,6 +131,9 @@ function HomeScreen() {
                   <div className="text-sm font-semibold">{d.merchant}</div>
                 </div>
                 <p className="mt-3 text-base font-semibold leading-snug">{d.title}</p>
+                <span className="mt-3 inline-flex rounded-full bg-primary/15 px-2 py-1 text-[11px] font-semibold text-primary">
+                  {d.relevanceTag}
+                </span>
                 <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <MapPin className="h-3.5 w-3.5" /> {d.distance}
@@ -143,6 +146,20 @@ function HomeScreen() {
             ))}
           </div>
         </section>
+
+        <Link
+          to="/regulars"
+          className="surface-card mx-5 mt-8 flex items-center gap-3 rounded-3xl p-4 transition-transform active:scale-[0.99]"
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
+            <Repeat2 className="h-5 w-5" />
+          </span>
+          <div className="flex-1">
+            <p className="font-semibold">Regular Items Tracked: {REGULAR_ITEMS_TRACKED}</p>
+            <p className="text-xs text-muted-foreground">We watch these for better deals</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-muted-foreground" />
+        </Link>
 
         <section className="pt-10">
           <SectionHeader title="Your Recent Scans" to="/receipts" />
